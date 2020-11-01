@@ -13,7 +13,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             using var source = new CancellationTokenSource(TimeSpan.FromSeconds(15));
             var cancellationToken = source.Token;
 
-            var token = Environment.GetEnvironmentVariable("TEST_TOKEN") ??
+            var token = Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
             using var client = new HttpClient();
@@ -32,7 +32,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             }
         }
 
-        public static async Task GeneralApiTestAsync(Func<ScraperApi, CancellationToken, Task<FullResponse>> action)
+        public static async Task GeneralApiTestAsync(Func<ScraperApi, CancellationToken, Task<JsonResponse>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -44,7 +44,19 @@ namespace ScraperApi.IntegrationTests.Utilities
             });
         }
 
-        public static async Task SingleApiTestAsync(Func<ScraperApi, CancellationToken, Task<string>> action)
+        public static async Task AccountTestAsync(Func<ScraperApi, CancellationToken, Task<AccountInformation>> action)
+        {
+            await ApiTestAsync(async (api, cancellationToken) =>
+            {
+                var response = await action(api, cancellationToken)
+                    .ConfigureAwait(false);
+
+                Assert.IsNotNull(response, nameof(response));
+                Console.WriteLine(response.GetPropertiesText());
+            });
+        }
+
+        public static async Task TextTestAsync(Func<ScraperApi, CancellationToken, Task<string>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {

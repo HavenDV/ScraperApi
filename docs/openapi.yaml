@@ -1,1209 +1,342 @@
 openapi: 3.0.0
 info:
   description: |
-    [https://ipinfo.io](https://ipinfo.io).
+    [https://www.scraperapi.com/](https://www.scraperapi.com/).
   version: "1.0.0"
-  title: ipinfo.io
+  title: ScraperApi
   contact:
     email: havendv@gmail.com
   license:
-    name: Apache 2.0
-    url: 'https://github.com/ipinfo/csharp/blob/master/LICENSE'
+    name: MIT
+    url: 'https://github.com/HavenDV/ScraperApi/blob/main/LICENSE'
     
 servers:
-  - url: 'https://ipinfo.io/'
+  - url: 'http://api.scraperapi.com/'
   
 tags:
   - name: general
     description: General API.
-      
-  - name: single
-    description: Single info API.
-      
-  - name: privacy detection
-    description: Privacy Detection API.
     externalDocs:
       description: Find more info here
-      url: https://ipinfo.io/developers/privacy
-      
-  - name: asn
-    description: ASN API.
-    externalDocs:
-      description: Find more info here
-      url: https://ipinfo.io/developers/asn
-      
-  - name: ranges
-    description: IP Ranges API.
-    externalDocs:
-      description: Find more info here
-      url: https://ipinfo.io/developers/ranges
-      
-  - name: domains
-    description: Hosted Domains API.
-    externalDocs:
-      description: Find more info here
-      url: https://ipinfo.io/developers/hosted-domains
-      
-  - name: abuse
-    description: Abuse Contact API.
-    externalDocs:
-      description: Find more info here
-      url: https://ipinfo.io/ip-abuse-contact-api
+      url: https://www.scraperapi.com/documentation
       
 paths:
   /:
     get:
       tags:
         - general
-      summary: Returns information about the current IP.
-      description: Returns information about the current IP.
-      operationId: getCurrentInformation
+      summary: Scrapes the url.
+      description: Scrapes the url.
+      operationId: get
       security:
-        - BasicAuth: []
-        - BearerAuth: []
         - ApiKeyAuth: []
+        
+      parameters:
+        - $ref: '#/components/parameters/Url'
+        - $ref: '#/components/parameters/Render'
+        - $ref: '#/components/parameters/KeepHeaders'
+        - $ref: '#/components/parameters/SessionNumber'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/Premium'
+        
       responses:
         '200':
-          $ref: '#/components/responses/FullResponse'
+          $ref: '#/components/responses/TextResponse'
+          
+        '403':
+          $ref: '#/components/responses/ExceedRequestsLimit'
           
         '404':
           $ref: '#/components/responses/NotFound'
-    
-  /batch:
+          
+        '429':
+          $ref: '#/components/responses/ExceedConcurrentConnectionLimit'
+          
+        '500':
+          $ref: '#/components/responses/NotCompleted'
+          
     post:
       tags:
         - general
-      summary: Returns information about the selected values.
-      description: Returns information about the selected values.
-      operationId: batch
+      summary: Scrapes the url.
+      description: Scrapes the url.
+      operationId: post
       security:
-        - BasicAuth: []
-        - BearerAuth: []
         - ApiKeyAuth: []
+        
+      parameters:
+        - $ref: '#/components/parameters/Url'
+        - $ref: '#/components/parameters/Render'
+        - $ref: '#/components/parameters/KeepHeaders'
+        - $ref: '#/components/parameters/SessionNumber'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/Premium'
       
       requestBody:
-        $ref: '#/components/requestBodies/Batch'
+        $ref: '#/components/requestBodies/FormData'
         
       responses:
         '200':
-          $ref: '#/components/responses/Batch'
+          $ref: '#/components/responses/JsonResponse'
+          
+        '403':
+          $ref: '#/components/responses/ExceedRequestsLimit'
           
         '404':
           $ref: '#/components/responses/NotFound'
-    
-  '/{ip}':
+          
+        '429':
+          $ref: '#/components/responses/ExceedConcurrentConnectionLimit'
+          
+        '500':
+          $ref: '#/components/responses/NotCompleted'
+          
+    put:
+      tags:
+        - general
+      summary: Scrapes the url.
+      description: Scrapes the url.
+      operationId: put
+      security:
+        - ApiKeyAuth: []
+        
+      parameters:
+        - $ref: '#/components/parameters/Url'
+        - $ref: '#/components/parameters/Render'
+        - $ref: '#/components/parameters/KeepHeaders'
+        - $ref: '#/components/parameters/SessionNumber'
+        - $ref: '#/components/parameters/CountryCode'
+        - $ref: '#/components/parameters/Premium'
+      
+      requestBody:
+        $ref: '#/components/requestBodies/FormData'
+        
+      responses:
+        '200':
+          $ref: '#/components/responses/JsonResponse'
+          
+        '403':
+          $ref: '#/components/responses/ExceedRequestsLimit'
+          
+        '404':
+          $ref: '#/components/responses/NotFound'
+          
+        '429':
+          $ref: '#/components/responses/ExceedConcurrentConnectionLimit'
+          
+        '500':
+          $ref: '#/components/responses/NotCompleted'
+          
+  /account:
     get:
       tags:
         - general
-      summary: Returns information about the selected IP.
-      description: Returns information about the selected IP.
-      operationId: getInformationByIp
+      summary: If you would like to monitor your account usage and limits programmatically (how many concurrent requests you're using, how many requests you've made, etc.) you may use the /account endpoint, which returns JSON. Note that the requestCount and failedRequestCount numbers only refresh once every 15 seconds, while the concurrentRequests number is availble in realtime.
+      description: If you would like to monitor your account usage and limits programmatically (how many concurrent requests you're using, how many requests you've made, etc.) you may use the /account endpoint, which returns JSON. Note that the requestCount and failedRequestCount numbers only refresh once every 15 seconds, while the concurrentRequests number is availble in realtime.
+      operationId: getAccountInformation
       security:
-        - BasicAuth: []
-        - BearerAuth: []
         - ApiKeyAuth: []
         
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
       responses:
         '200':
-          $ref: '#/components/responses/FullResponse'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/AS{asn}/json':
-    get:
-      tags:
-        - asn
-      summary: Returns information about an ASN, such as the assigned prefixes, related domain, and more.
-      description: Returns information about an AS.
-      operationId: getAsn
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Asn'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Asn'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/ranges/{domain}':
-    get:
-      tags:
-        - ranges
-      summary: Our IP address ranges API returns a list of all of the IP addresses ranges assigned to or operated by a company, identified by the provided domain name.
-      description: Returns information about a domain ranges.
-      operationId: getRanges
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Domain'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Ranges'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/domains/{ip}':
-    get:
-      tags:
-        - domains
-      summary: Our Hosted Domains, or Reverse IP API returns a list of all of the domains hosted on the provided IP address.
-      description: Returns a list of all of the domains hosted on the provided IP address.
-      operationId: getDomains
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/Limit'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Domains'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
+          $ref: '#/components/responses/AccountInformation'
     
     
-  '/{ip}/abuse':
-    get:
-      tags:
-        - abuse
-      summary: Our abuse contact API returns data containing information belonging to the abuse contact of every IP address on the Internet. Fields included in this response are the abuse contact's email address, postal/ZIP code, city, state, country, name, network, and phone number. 
-      description: Our abuse contact API returns data containing information belonging to the abuse contact of every IP address on the Internet. Fields included in this response are the abuse contact's email address, postal/ZIP code, city, state, country, name, network, and phone number. 
-      operationId: getAbuse
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Abuse'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-          
-    
-  '/{ip}/privacy':
-    get:
-      tags:
-        - privacy detection
-      summary: Returns privacy information about the selected IP.
-      description: Returns privacy information about the selected IP.
-      operationId: getPrivacyInformationByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Privacy'
-          
-        '400':
-          $ref: '#/components/responses/TokenNotPassed'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/ip':
-    get:
-      tags:
-        - single
-      summary: Returns the current IP.
-      description: Returns the current IP.
-      operationId: getCurrentIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Ip'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/ip':
-    get:
-      tags:
-        - single
-      summary: Returns a ip for the selected IP. Yes, I know this is a pointless method.
-      description: Returns a ip for the selected IP. Yes, I know this is a pointless method.
-      operationId: getIpByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Ip'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/hostname':
-    get:
-      tags:
-        - single
-      summary: Returns the current hostname.
-      description: Returns the current hostname.
-      operationId: getCurrentHostname
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Hostname'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/hostname':
-    get:
-      tags:
-        - single
-      summary: Returns a hostname for the selected IP.
-      description: Returns a hostname for the selected IP.
-      operationId: getHostnameByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Hostname'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/city':
-    get:
-      tags:
-        - single
-      summary: Returns the current city.
-      description: Returns the current city.
-      operationId: getCurrentCity
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/City'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/city':
-    get:
-      tags:
-        - single
-      summary: Returns a city for the selected IP.
-      description: Returns a city for the selected IP.
-      operationId: getCityByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/City'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/region':
-    get:
-      tags:
-        - single
-      summary: Returns the current region.
-      description: Returns current region.
-      operationId: getCurrentRegion
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Region'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/region':
-    get:
-      tags:
-        - single
-      summary: Returns a region for the selected IP.
-      description: Returns a region for the selected IP.
-      operationId: getRegionByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Region'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/country':
-    get:
-      tags:
-        - single
-      summary: Returns the current country.
-      description: Returns the current country.
-      operationId: getCurrentCountry
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Country'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/country':
-    get:
-      tags:
-        - single
-      summary: Returns a country for the selected IP.
-      description: Returns a country for the selected IP.
-      operationId: getCountryByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Country'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/loc':
-    get:
-      tags:
-        - single
-      summary: Returns the current location.
-      description: Returns the current location.
-      operationId: getCurrentLocation
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Location'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/loc':
-    get:
-      tags:
-        - single
-      summary: Get a location for the selected IP.
-      description: Returns a location for the selected IP.
-      operationId: getLocationByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Location'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/postal':
-    get:
-      tags:
-        - single
-      summary: Returns the current postal.
-      description: Returns the current postal.
-      operationId: getCurrentPostal
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Postal'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/postal':
-    get:
-      tags:
-        - single
-      summary: Returns a postal for the selected IP.
-      description: Returns a postal for the selected IP.
-      operationId: getPostalByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Postal'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/timezone':
-    get:
-      tags:
-        - single
-      summary: Returns the current timezone.
-      description: Returns the current timezone.
-      operationId: getCurrentTimezone
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Timezone'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/timezone':
-    get:
-      tags:
-        - single
-      summary: Returns a timezone for the selected IP.
-      description: Returns a timezone for the selected IP.
-      operationId: getTimezoneByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Timezone'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/org':
-    get:
-      tags:
-        - single
-      summary: Returns the current organization.
-      description: Returns the current organization.
-      operationId: getCurrentOrganization
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Organization'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
-  '/{ip}/org':
-    get:
-      tags:
-        - single
-      summary: Returns a organization for the selected IP.
-      description: Returns a organization for the selected IP.
-      operationId: getOrganizationByIp
-      security:
-        - BasicAuth: []
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        
-      parameters:
-        - $ref: '#/components/parameters/Ip'
-            
-      responses:
-        '200':
-          $ref: '#/components/responses/Organization'
-          
-        '404':
-          $ref: '#/components/responses/NotFound'
-        
-        
 externalDocs:
-  description: Find out more about ipinfo.io
-  url: 'https://ipinfo.io/developers'
+  description: Find out more about scraperapi.com
+  url: 'https://www.scraperapi.com/documentation'
   
   
 components:
   schemas:
-    FullResponse:
+    AccountInformation:
       type: object
       required:
-        - ip
-        - city
-        - region
-        - country
-        - loc
-        - postal
-        - timezone
+        - concurrentRequests
+        - requestCount
+        - failedRequestCount
+        - requestLimit
+        - concurrencyLimit
         
       properties:
-        ip:
-          type: string
-          example: '66.87.125.72'
-          
-        hostname:
-          type: string
-          example: 'ip-66-87-125-72.spfdma.spcsdns.net'
-          
-        city:
-          type: string
-          example: 'Springfield'
-          
-        region:
-          type: string
-          example: 'Massachusetts'
-          
-        country:
-          type: string
-          example: 'US'
-          
-        loc:
-          type: string
-          example: '42.0999,-72.5783'
-          
-        postal:
-          type: string
-          example: '01105'
-          
-        timezone:
-          type: string
-          example: 'America/New_York'
-          
-        org:
-          type: string
-          example: 'AS51501 Khabarovsk home networks Ltd'
-          
-        asn:
-          $ref: '#/components/schemas/AsnResponse'
-          
-        company:
-          $ref: '#/components/schemas/Company'
-          
-        carrier:
-          $ref: '#/components/schemas/Carrier'
-          
-        privacy:
-          $ref: '#/components/schemas/PrivacyResponse'
-          
-        domains:
-          $ref: '#/components/schemas/DomainsResponse'
-        
-    AsnResponse:
-      type: object
-      required:
-        - asn
-        - name
-        - domain
-        - type
-        
-      properties:
-        asn:
-          type: string
-          example: 'AS10507'
-          
-        name:
-          type: string
-          example: 'Sprint Personal Communications Systems'
-          
-        country:
-          type: string
-          example: 'US'
-          
-        allocated:
-          type: string
-          example: '1997-02-14'
-          
-        registry:
-          type: string
-          example: 'arin'
-          
-        domain:
-          type: string
-          example: 'sprint.net'
-          
-        num_ips:
+        concurrentRequests:
           type: integer
-          example: 71224576
+          example: 553
           
-        route:
-          type: string
-          example: '66.87.125.0/24'
-          
-        type:
-          type: string
-          example: 'isp'
-          enum:
-            - isp
-            - business
-            - education
-            - hosting
-          
-        prefixes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Prefix'
-          
-        prefixes6:
-          type: array
-          items:
-            $ref: '#/components/schemas/Prefix6'
-          
-        peers:
-          type: array
-          items:
-            type: string
-            example: '1299'
-          
-        upstreams:
-          type: array
-          items:
-            type: string
-            example: '1299'
-          
-        downstreams:
-          type: array
-          items:
-            type: string
-            example: '109'
-        
-    Prefix:
-      type: object
-      required:
-        - netblock
-        - id
-        - name
-        - country
-        
-      properties:
-        netblock:
-          type: string
-          example: '104.69.216.0/22'
-          
-        id:
-          type: string
-          example: 'AKAMAI'
-          
-        name:
-          type: string
-          example: 'Akamai Technologies, Inc.'
-          
-        country:
-          type: string
-          example: 'US'
-          
-        size:
-          type: string
-          example: '256'
-          
-        status:
-          type: string
-          example: 'ALLOCATION'
-          
-        domain:
-          type: string
-          nullable: true
-          example: 'quadranet.com'
-        
-    Prefix6:
-      type: object
-      required:
-        - netblock
-        - id
-        - name
-        - country
-        
-      properties:
-        netblock:
-          type: string
-          example: '2601::/20'
-          
-        id:
-          type: string
-          example: 'COMCAST6NET'
-          
-        name:
-          type: string
-          example: 'Comcast Cable Communications, LLC'
-          
-        country:
-          type: string
-          example: 'US'
-          
-        size:
-          type: string
-          example: '20282409603651670423947251286016'
-          
-        status:
-          type: string
-          example: 'ASSIGNMENT'
-          
-        domain:
-          type: string
-          example: 'comcast.com'
-        
-    RangesResponse:
-      type: object
-      required:
-        - domain
-        - num_ranges
-        - ranges
-        
-      properties:
-        domain:
-          type: string
-          example: 'comcast.net'
-          
-        num_ranges:
-          type: string
-          example: '37330'
-          
-        ranges:
-          type: array
-          items:
-            type: string
-            example: '23.24.240.0/29'
-        
-    DomainsResponse:
-      type: object
-      required:
-        - total
-        
-      properties:
-        ip:
-          type: string
-          example: '1.1.1.1'
-          
-        page:
+        requestCount:
           type: integer
-          example: 1
+          example: 6655888
           
-        total:
+        failedRequestCount:
           type: integer
-          example: 17939
+          example: 1118
           
-        domains:
-          type: array
-          items:
-            type: string
-            example: 'udemy.com'
-        
-    AbuseResponse:
-      type: object
-        
-      properties:
-        address:
-          type: string
-          example: 'US, CA, Mountain View, 1600 Amphitheatre Parkway, 94043'
+        requestLimit:
+          type: integer
+          example: 10000000
           
-        country:
-          type: string
-          example: 'US'
+        concurrencyLimit:
+          type: integer
+          example: 1000
           
-        email:
-          type: string
-          example: 'network-abuse@google.com'
-          
-        name:
-          type: string
-          example: 'Abuse'
-          
-        network:
-          type: string
-          example: '8.8.8.0/24'
-          
-        phone:
-          type: string
-          example: '+1-650-253-0000'
-        
-    Company:
+    JsonResponse:
       type: object
       required:
-        - name
-        - domain
-        - type
+        - args
+        - data
+        - files
+        - form
+        - headers
+        - json
+        - method
+        - origin
+        - url
         
       properties:
-        name:
-          type: string
-          example: 'Sprint Springfield POP'
-          
-        domain:
-          type: string
-          example: 'sprint.com'
-          
-        type:
-          type: string
-          example: 'isp'
-          enum:
-            - isp
-            - business
-            - education
-            - hosting
-        
-    Carrier:
-      type: object
-      required:
-        - name
-        - mcc
-        - mnc
-        
-      properties:
-        name:
-          type: string
-          example: 'Sprint Corporation'
-          
-        mcc:
-          type: string
-          example: '310'
-          
-        mnc:
-          type: string
-          example: '120'
-        
-    PrivacyResponse:
-      type: object
-      required:
-        - vpn
-        - proxy
-        - tor
-        - hosting
-        
-      properties:
-        vpn:
-          type: boolean
-          example: true
-          
-        proxy:
-          type: boolean
-          example: false
-          
-        tor:
-          type: boolean
-          example: false
-          
-        hosting:
-          type: boolean
-          example: false
-          
-    Error:
-      type: object
-      required:
-        - error
-        
-      properties:
-        error:
+        args:
           type: object
-          required:
-            - title
-            - message
+          additionalProperties:
+            type: string
+          
+        data:
+          type: string
+          example: '{\"foo\":\"bar\"}'
+          
+        files:
+          type: object
+          additionalProperties:
+            type: string
             
-          properties:
-            title:
-              type: string
-              example: 'Wrong ip'
-              
-            message:
-              type: string
-              example: 'Please provide a valid IP address'
-    
-  requestBodies:
-    Batch:
-      description: A JSON array containing values.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              type: string
-    
+        form:
+          type: object
+          additionalProperties:
+            type: string
+            
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            Accept: 'application/json'
+            Accept-Encoding: 'gzip, deflate'
+            Content-Length: '13'
+            Content-Type: 'application/json; charset=utf-8'
+            Host: 'httpbin.org'
+            Upgrade-Insecure-Request: '1'
+            User-Agent: 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
+            
+        json:
+          type: object
+          additionalProperties:
+            type: string
+          
+        method:
+          type: string
+          example: 'POST'
+          
+        origin:
+          type: string
+          example: '191.101.82.154, 191.101.82.154'
+          
+        url:
+          type: string
+          example: 'https://httpbin.org/anything'
+          
   parameters:
-    Ip:
-      name: ip
-      in: path
-      description: A single IPv4 or IPv6 IP address.
+    Url:
+      name: url
+      in: query
+      description: The url you would like to scrape.
       required: true
       schema:
         type: string
-      
-    Asn:
-      name: asn
-      in: path
-      description: an ASN number.
-      required: true
+        
+    Render:
+      name: render
+      in: query
+      description: If you are crawling a page that requires you to render the javascript on the page, we can fetch these pages using a headless browser. This feature is only available on the Business and Enterprise plans. To render javascript, simply set render=true and we will use a headless Google Chrome instance to fetch the page.
+      required: false
+      schema:
+        type: boolean
+        
+    KeepHeaders:
+      name: keep_headers
+      in: query
+      description: If you would like to keep the original request headers in order to pass through custom headers (user agents, cookies, etc.), simply set keep_headers=true. Only use this feature in order to get customized results, do not use this feature in order to avoid blocks, we handle that internally.
+      required: false
+      schema:
+        type: boolean
+        
+    SessionNumber:
+      name: session_number
+      in: query
+      description: To reuse the same proxy for multiple requests, simply use the &session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.
+      required: false
       schema:
         type: integer
-      
-    Domain:
-      name: domain
-      in: path
-      description: a domain.
-      required: true
+        
+    CountryCode:
+      name: country_code
+      in: query
+      description: To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.
+      required: false
       schema:
         type: string
-      
-    Page:
-      name: page
+        
+    Premium:
+      name: premium
       in: query
-      description: The page query parameter can be used to go through paginated records. page starts at 0 and the parameter is part of the response when included in request.
+      description: Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.
+      required: false
       schema:
-        type: integer
-        minimum: 0
+        type: boolean
       
-    Limit:
-      name: limit
-      in: query
-      description: The API returns 100 domains per page and has a limit of 1000 domains per page. We return up to 10 million results. The limit parameter can be used to control the number of domains per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 100
-      
-  responses:
-    FullResponse:
-      description: Full response object.
+  requestBodies:
+    FormData:
+      description: POST/PUT body.
+      required: true
       content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullResponse'
-            
-    Asn:
-      description: ASN response object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AsnResponse'
-            
-    Ranges:
-      description: Ranges response object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RangesResponse'
-            
-    Domains:
-      description: Domains response object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DomainsResponse'
-            
-    Abuse:
-      description: Abuse response object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AbuseResponse'
-            
-    Privacy:
-      description: Privacy response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PrivacyResponse'
-            
-    Batch:
-      description: Batch response object.
-      content:
-        application/json:
+        application/x-www-form-urlencoded:
           schema:
             type: object
-            additionalProperties:
-              type: object
+            additionalProperties: true
               
-            example:
-              8.8.8.8/city: Mountain View
-              8.8.8.8:
-                ip: 8.8.8.8
-                hostname: dns.google
-                city: Mountain View
-                region: California
-                country: US
-                loc: 37.4056,-122.0775
-                org: AS15169 Google LLC
-                postal: 94043
-                timezone: America/Los_Angeles
-                
-      
-    Ip:
-      description: An ip.
+  responses:
+    TextResponse:
+      description: Successfull response.
       content:
         text/plain:
           schema:
             type: string
-            example: '66.87.125.72'
-      
-    Hostname:
-      description: A hostname.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'ip-66-87-125-72.spfdma.spcsdns.net'
-      
-    City:
-      description: A city.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'Springfield'
-      
-    Region:
-      description: A region.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'Massachusetts'
-      
-    Country:
-      description: A country.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'US'
-            
-    Location:
-      description: A location.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: '42.0999,-72.5783'
-            
-    Postal:
-      description: A postal.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: '01105'
-            
-    Timezone:
-      description: A timezone.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'America/New_York'
-            
-    Organization:
-      description: A organization.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'AS51501 Khabarovsk home networks Ltd'
-    
-    TokenNotPassed:
-      description: Token not passed. Please pass a valid token to access this module.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     
     NotFound:
-      description: Wrong ip. Please provide a valid IP address.
+      description: Wrong url.
+    
+    ExceedRequestsLimit:
+      description: There is no overage allowed on the free plan, if you exceed 1000 requests per month on the free plan, you will receive a 403 error.
+    
+    ExceedConcurrentConnectionLimit:
+      description: If you exceed your plan concurrent connection limit, the API will respond with a 429 status code, this can be solved by slowing down your request rate.
+    
+    NotCompleted:
+      description: In cases where every request fails in 60 seconds we will return a 500 error, you may retry the request and you will not be charged for the unsuccessful request.
+            
+    AccountInformation:
+      description: Account Information response.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/AccountInformation'
+            
+    JsonResponse:
+      description: Json response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JsonResponse'
             
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-      
-    BearerAuth:
-      type: http
-      scheme: bearer
-      
     ApiKeyAuth:
       type: apiKey
       in: query
-      name: token
+      name: api_key
