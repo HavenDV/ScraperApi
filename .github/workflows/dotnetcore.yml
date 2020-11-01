@@ -13,7 +13,7 @@ jobs:
     name: ${{ matrix.os }} - ${{ matrix.dotnet }}
     env:
       DOTNET_NOLOGO: true
-      TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+      SCRAPER_API_TOKEN: ${{ secrets.SCRAPER_API_TOKEN }}
     
     steps:
     - name: Getting code
