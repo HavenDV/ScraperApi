@@ -43,6 +43,9 @@ paths:
         '200':
           $ref: '#/components/responses/TextResponse'
           
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+          
         '403':
           $ref: '#/components/responses/ExceedRequestsLimit'
           
@@ -77,7 +80,10 @@ paths:
         
       responses:
         '200':
-          $ref: '#/components/responses/JsonResponse'
+          $ref: '#/components/responses/TextResponse'
+          
+        '401':
+          $ref: '#/components/responses/Unauthorized'
           
         '403':
           $ref: '#/components/responses/ExceedRequestsLimit'
@@ -113,7 +119,10 @@ paths:
         
       responses:
         '200':
-          $ref: '#/components/responses/JsonResponse'
+          $ref: '#/components/responses/TextResponse'
+          
+        '401':
+          $ref: '#/components/responses/Unauthorized'
           
         '403':
           $ref: '#/components/responses/ExceedRequestsLimit'
@@ -178,69 +187,6 @@ components:
         concurrencyLimit:
           type: integer
           example: 1000
-          
-    JsonResponse:
-      type: object
-      required:
-        - args
-        - data
-        - files
-        - form
-        - headers
-        - json
-        - method
-        - origin
-        - url
-        
-      properties:
-        args:
-          type: object
-          additionalProperties:
-            type: string
-          
-        data:
-          type: string
-          example: '{\"foo\":\"bar\"}'
-          
-        files:
-          type: object
-          additionalProperties:
-            type: string
-            
-        form:
-          type: object
-          additionalProperties:
-            type: string
-            
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            Accept: 'application/json'
-            Accept-Encoding: 'gzip, deflate'
-            Content-Length: '13'
-            Content-Type: 'application/json; charset=utf-8'
-            Host: 'httpbin.org'
-            Upgrade-Insecure-Request: '1'
-            User-Agent: 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
-            
-        json:
-          type: object
-          additionalProperties:
-            type: string
-          
-        method:
-          type: string
-          example: 'POST'
-          
-        origin:
-          type: string
-          example: '191.101.82.154, 191.101.82.154'
-          
-        url:
-          type: string
-          example: 'https://httpbin.org/anything'
           
   parameters:
     Url:
@@ -312,6 +258,9 @@ components:
     NotFound:
       description: Wrong url.
     
+    Unauthorized:
+      description: Unauthorized request, please make sure your API key is valid.
+    
     ExceedRequestsLimit:
       description: There is no overage allowed on the free plan, if you exceed 1000 requests per month on the free plan, you will receive a 403 error.
     
@@ -327,13 +276,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountInformation'
-            
-    JsonResponse:
-      description: Json response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/JsonResponse'
             
   securitySchemes:
     ApiKeyAuth:
