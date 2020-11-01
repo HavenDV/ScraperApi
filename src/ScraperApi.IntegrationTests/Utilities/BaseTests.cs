@@ -32,19 +32,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             }
         }
 
-        public static async Task GeneralApiTestAsync(Func<ScraperApi, CancellationToken, Task<JsonResponse>> action)
-        {
-            await ApiTestAsync(async (api, cancellationToken) =>
-            {
-                var response = await action(api, cancellationToken)
-                    .ConfigureAwait(false);
-
-                Assert.IsNotNull(response, nameof(response));
-                Console.WriteLine(response.GetPropertiesText());
-            });
-        }
-
-        public static async Task AccountTestAsync(Func<ScraperApi, CancellationToken, Task<AccountInformation>> action)
+        public static async Task AccountInformationTestAsync(Func<ScraperApi, CancellationToken, Task<AccountInformation>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
