@@ -13,7 +13,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             using var source = new CancellationTokenSource(TimeSpan.FromSeconds(15));
             var cancellationToken = source.Token;
 
-            var token = Environment.GetEnvironmentVariable("IPINFO_TOKEN") ??
+            var token = Environment.GetEnvironmentVariable("TEST_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
             using var client = new HttpClient();
