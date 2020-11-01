@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Signing">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Nuget">
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>ScraperApi</Authors>
+    <Company>ScraperApi</Company>
+    <Description>This is the official C# SDK for the ScraperApi</Description>
+    <PackageProjectUrl>https://github.com/HavenDV/ScraperApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HavenDV/ScraperApi</RepositoryUrl>
+    <PackageTags>ScraperApi, Scraper, Api</PackageTags>
+    <PackageReleaseNotes>Prepare to release.</PackageReleaseNotes>
+    <PackageLicenseFile></PackageLicenseFile>
+    <Copyright>Copyright © ScraperApi 2020</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>nuget_icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup Label="Nuget">
+    <None Include="..\..\docs\nuget_icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <PackageReference Include="ReadOnlyCollectionInterfaces" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+  </ItemGroup>
+
+</Project>
