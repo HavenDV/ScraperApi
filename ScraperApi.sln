@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi", "src\ScraperApi\ScraperApi.csproj", "{B4A051B9-9560-4178-A38F-631F34778883}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.Example", "src\ScraperApi.Example\ScraperApi.Example.csproj", "{8995F3DC-1A4F-4B7B-926D-BCCEFE8B539A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.IntegrationTests", "src\ScraperApi.IntegrationTests\ScraperApi.IntegrationTests.csproj", "{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{B4A051B9-9560-4178-A38F-631F34778883}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4A051B9-9560-4178-A38F-631F34778883}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4A051B9-9560-4178-A38F-631F34778883}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8995F3DC-1A4F-4B7B-926D-BCCEFE8B539A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8995F3DC-1A4F-4B7B-926D-BCCEFE8B539A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8995F3DC-1A4F-4B7B-926D-BCCEFE8B539A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8995F3DC-1A4F-4B7B-926D-BCCEFE8B539A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
