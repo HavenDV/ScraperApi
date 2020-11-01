@@ -249,7 +249,7 @@ components:
               
   responses:
     TextResponse:
-      description: Successfull response.
+      description: Text response.
       content:
         text/plain:
           schema:

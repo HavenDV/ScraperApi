@@ -13,6 +13,10 @@ namespace ScraperApi.IntegrationTests
             (api, cancellationToken) => api.GetAsync("http://httpbin.org/ip", cancellationToken: cancellationToken));
 
         [TestMethod]
+        public async Task PremiumGetAsyncTest() => await BaseTests.TextTestAsync(
+            (api, cancellationToken) => api.GetAsync("http://httpbin.org/ip", premium: true, cancellationToken: cancellationToken));
+
+        [TestMethod]
         public async Task PutAsyncTest() => await BaseTests.TextTestAsync(
             (api, cancellationToken) => api.PutAsync("http://httpbin.org/anything", new Dictionary<string, string>
             {
