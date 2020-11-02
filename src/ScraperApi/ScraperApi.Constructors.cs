@@ -98,6 +98,21 @@ namespace ScraperApi
                 request.Content.Dispose();
                 request.Content = new FormUrlEncodedContent(formData);
             }
+
+            if (request.Headers.TryGetValues("headers", out var values))
+            {
+                var json = values.FirstOrDefault();
+                if (json != null && !string.IsNullOrWhiteSpace(json))
+                {
+                    var headers = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(json);
+
+                    request.Headers.Remove("headers");
+                    foreach (var pair in headers)
+                    {
+                        request.Headers.TryAddWithoutValidation(pair.Key, pair.Value);
+                    }
+                }
+            }
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -119,7 +134,9 @@ namespace ScraperApi
             bool? premium = null,
             CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, cancellationToken);
+            var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
+
+            return await GetCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, cancellationToken);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -143,7 +160,9 @@ namespace ScraperApi
             bool? premium = null,
             CancellationToken cancellationToken = default)
         {
-            return await PutCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, formData.ToList(), cancellationToken);
+            var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
+
+            return await PutCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, formData.ToList(), cancellationToken);
         }
 
 
@@ -168,7 +187,9 @@ namespace ScraperApi
             bool? premium = null, 
             CancellationToken cancellationToken = default)
         {
-            return await PostCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, formData.ToList(), cancellationToken);
+            var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
+
+            return await PostCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, formData.ToList(), cancellationToken);
         }
 
         #endregion

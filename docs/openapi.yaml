@@ -38,6 +38,7 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/Headers'
         
       responses:
         '200':
@@ -74,6 +75,7 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/Headers'
       
       requestBody:
         $ref: '#/components/requestBodies/FormData'
@@ -113,6 +115,7 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/Headers'
       
       requestBody:
         $ref: '#/components/requestBodies/FormData'
@@ -194,6 +197,14 @@ components:
       in: query
       description: The url you would like to scrape.
       required: true
+      schema:
+        type: string
+        
+    Headers:
+      name: headers
+      in: header
+      description: Custom headers.
+      required: false
       schema:
         type: string
         

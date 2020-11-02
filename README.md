@@ -89,7 +89,10 @@ using ScraperApi;
 using var client = new HttpClient();
 var api = new ScraperApi("YOURAPIKEY", client);
 
-var result = await api.GetAsync("http://httpbin.org/anything", keep_headers: true);
+var result = await api.GetAsync("http://httpbin.org/anything", headers: new Dictionary<string, string>
+{
+    { "X-MyHeader", "123" },
+});
 
 Console.WriteLine($"Result: {result}");
 ```
