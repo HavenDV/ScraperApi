@@ -12,7 +12,7 @@ namespace ScraperApi
     /// <summary>
     /// Class providing methods for API access.
     /// </summary>
-    public partial class ScraperApi
+    public partial class ScraperApiClient
     {
         #region Static methods
 
@@ -71,7 +71,7 @@ namespace ScraperApi
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="httpClient"></param>
-        public ScraperApi(string apiKey, HttpClient httpClient) : this(httpClient)
+        public ScraperApiClient(string apiKey, HttpClient httpClient) : this(httpClient)
         {
             ApiKey = apiKey;
         }

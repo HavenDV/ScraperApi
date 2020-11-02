@@ -8,7 +8,7 @@ namespace ScraperApi.IntegrationTests.Utilities
 {
     internal static class BaseTests
     {
-        public static async Task ApiTestAsync(Func<ScraperApi, CancellationToken, Task> action)
+        public static async Task ApiTestAsync(Func<ScraperApiClient, CancellationToken, Task> action)
         {
             using var source = new CancellationTokenSource(TimeSpan.FromSeconds(15));
             var cancellationToken = source.Token;
@@ -17,7 +17,7 @@ namespace ScraperApi.IntegrationTests.Utilities
                         throw new InvalidOperationException("token is null.");
 
             using var client = new HttpClient();
-            var api = new ScraperApi(token, client);
+            var api = new ScraperApiClient(token, client);
 
             try
             {
@@ -32,7 +32,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             }
         }
 
-        public static async Task AccountInformationTestAsync(Func<ScraperApi, CancellationToken, Task<AccountInformation>> action)
+        public static async Task AccountInformationTestAsync(Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -44,7 +44,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             });
         }
 
-        public static async Task TextTestAsync(Func<ScraperApi, CancellationToken, Task<string>> action)
+        public static async Task TextTestAsync(Func<ScraperApiClient, CancellationToken, Task<string>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
