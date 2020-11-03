@@ -5,10 +5,11 @@
     <TargetFrameworks>netcoreapp3.1;net45</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <RootNamespace>Example</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ScraperApi" Version="1.0.0" />
+    <PackageReference Include="ScraperApi" Version="0.6.0" />
   </ItemGroup>
 
 </Project>
