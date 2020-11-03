@@ -332,8 +332,8 @@ Result:
 
 ## Live Example
 
-C# .NET Fiddle - https://dotnetfiddle.net/i5MmNp  
-VB.NET .NET Fiddle - https://dotnetfiddle.net/EUszSY  
+C# .NET Fiddle - https://dotnetfiddle.net/ 
+VB.NET .NET Fiddle - https://dotnetfiddle.net/ 
 
 ## Contacts
 * [mail](mailto:havendv@gmail.com)
