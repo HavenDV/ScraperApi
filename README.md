@@ -31,7 +31,7 @@ Scraper API exposes a single API endpoint, simply send a GET request to http://a
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/ip");
 
@@ -59,7 +59,7 @@ If you would like to keep the original request headers in order to pass through 
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/ip", render: true);
 
@@ -87,7 +87,7 @@ If you would like to keep the original request headers in order to pass through 
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/anything", headers: new Dictionary<string, string>
 {
@@ -138,7 +138,7 @@ To reuse the same proxy for multiple requests, simply use the &session_number= f
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result1 = await api.GetAsync("http://httpbin.org/ip", session_number: 123);
 var result2 = await api.GetAsync("http://httpbin.org/ip", session_number: 123);
@@ -177,7 +177,7 @@ To ensure your requests come from the United States, please use the country_code
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/ip", country_code: "us");
 
@@ -205,7 +205,7 @@ Our standard proxy pools include millions of proxies from over a dozen ISPs, and
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/ip", premium: true);
 
@@ -233,7 +233,7 @@ Result:
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var postResult = await api.PostAsync("http://httpbin.org/anything", new Dictionary<string, string>
 {
@@ -293,7 +293,7 @@ To simplify implementation, we offer a proxy front-end to the API. The proxy wil
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var result = await api.GetAsync("http://httpbin.org/ip", proxyMode: true);
 
@@ -304,7 +304,7 @@ HttpClient with ScraperApi proxy(Also `ScraperApiClient.GetProxyHttpClientHandle
 ```cs
 using ScraperApi;
 
-using var client = ScraperApiClient.GetProxyHttpClient("YOURAPIKEY");
+using var client = ScraperApiClient.GetProxyHttpClient("bc07b32853472e8276803c731972fd5f");
 
 var response = await client.GetAsync("https://httpbin.org/ip");
 
@@ -321,7 +321,7 @@ If you would like to monitor your account usage and limits programmatically (how
 using ScraperApi;
 
 using var client = new HttpClient();
-var api = new ScraperApiClient("YOURAPIKEY", client);
+var api = new ScraperApiClient("bc07b32853472e8276803c731972fd5f", client);
 
 var information = await api.GetAccountInformationAsync();
 
