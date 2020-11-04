@@ -16,10 +16,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             var token = Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
-            using var client = new HttpClient
-            {
-                Timeout = TimeSpan.FromMinutes(1)
-            };
+            using var client = new HttpClient();
             var api = new ScraperApiClient(token, client);
 
             try
