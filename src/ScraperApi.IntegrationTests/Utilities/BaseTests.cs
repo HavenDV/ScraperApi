@@ -16,20 +16,13 @@ namespace ScraperApi.IntegrationTests.Utilities
             var token = Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
-            using var client = new HttpClient();
+            using var client = new HttpClient
+            {
+                Timeout = TimeSpan.FromMinutes(1),
+            };
             var api = new ScraperApiClient(token, client);
 
-            try
-            {
-                await action(api, cancellationToken).ConfigureAwait(false);
-            }
-            catch (ApiException exception)
-            {
-                if (exception.StatusCode != 403)
-                {
-                    throw;
-                }
-            }
+            await action(api, cancellationToken).ConfigureAwait(false);
         }
 
         public static async Task AccountInformationTestAsync(Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action)
