@@ -288,14 +288,10 @@ components:
       description: POST/PUT body.
       required: true
       content:
-        text/plain:
-              schema:
-                type: string
-        # It should be, but is not supported by generators
-        # application/x-www-form-urlencoded:
-        #   schema:
-        #     type: object
-        #     additionalProperties: true
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            additionalProperties: true
               
   responses:
     TextResponse:
