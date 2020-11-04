@@ -31,8 +31,8 @@ namespace ScraperApi
         {
             return new WebProxy
             {
-                Address = new Uri("http://proxy-server.scraperapi.com:8001"),
-                Credentials = new NetworkCredential("scraperapi", apiKey)
+                Address = new Uri("http://proxy-server.scraperapi.com:8001/"),
+                Credentials = new NetworkCredential("scraperapi", apiKey),
             };
         }
 
@@ -146,7 +146,7 @@ namespace ScraperApi
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await GetCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, cancellationToken);
+            return await GetCoreAsync(url, render, headers != null ? (bool?)true : null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, cancellationToken);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -176,7 +176,7 @@ namespace ScraperApi
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await PutCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
+            return await PutCoreAsync(url, render, headers != null ? (bool?)true : null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
         }
 
 
@@ -207,7 +207,7 @@ namespace ScraperApi
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await PostCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
+            return await PostCoreAsync(url, render, headers != null ? (bool?)true : null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
         }
 
         #endregion
