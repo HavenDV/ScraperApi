@@ -14,6 +14,12 @@ namespace ScraperApi
     /// </summary>
     public partial class ScraperApiClient
     {
+        #region Constants
+
+        private const string Sdk = "csharp";
+
+        #endregion
+
         #region Static methods
 
         /// <summary>
@@ -126,20 +132,24 @@ namespace ScraperApi
         /// <param name="sessionNumber">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="countryCode">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
+        /// <param name="deviceType">Undocumented.</param>
+        /// <param name="autoParse">Undocumented.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<string> GetAsync(
             string url, 
             bool? render = null,
             IEnumerable<KeyValuePair<string, string>>? headers = null, 
-            int? sessionNumber = null, 
+            string? sessionNumber = null, 
             string? countryCode = null, 
             bool? premium = null,
+            Device_type? deviceType = null,
+            bool? autoParse = null,
             CancellationToken cancellationToken = default)
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await GetCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, cancellationToken);
+            return await GetCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, cancellationToken);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -151,6 +161,8 @@ namespace ScraperApi
         /// <param name="sessionNumber">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="countryCode">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
+        /// <param name="deviceType">Undocumented.</param>
+        /// <param name="autoParse">Undocumented.</param>
         /// <returns>Json response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<string> PutAsync(
@@ -158,14 +170,16 @@ namespace ScraperApi
             IEnumerable<KeyValuePair<string, string>> formData, 
             bool? render = null,
             IEnumerable<KeyValuePair<string, string>>? headers = null,
-            int? sessionNumber = null, 
+            string? sessionNumber = null, 
             string? countryCode = null, 
-            bool? premium = null,
+            bool? premium = null, 
+            Device_type? deviceType = null,
+            bool? autoParse = null,
             CancellationToken cancellationToken = default)
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await PutCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, formData.ToList(), cancellationToken);
+            return await PutCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
         }
 
 
@@ -178,6 +192,8 @@ namespace ScraperApi
         /// <param name="sessionNumber">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="countryCode">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
+        /// <param name="deviceType">Undocumented.</param>
+        /// <param name="autoParse">Undocumented.</param>
         /// <returns>Json response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<string> PostAsync(
@@ -185,14 +201,16 @@ namespace ScraperApi
             IEnumerable<KeyValuePair<string, string>> formData,
             bool? render = null,
             IEnumerable<KeyValuePair<string, string>>? headers = null,
-            int? sessionNumber = null, 
+            string? sessionNumber = null, 
             string? countryCode = null, 
-            bool? premium = null, 
+            bool? premium = null,
+            Device_type? deviceType = null,
+            bool? autoParse = null,
             CancellationToken cancellationToken = default)
         {
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
 
-            return await PostCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, headersJson, formData.ToList(), cancellationToken);
+            return await PostCoreAsync(url, render, headers != null, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken);
         }
 
         #endregion

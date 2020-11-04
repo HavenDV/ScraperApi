@@ -38,6 +38,9 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/DeviceType'
+        - $ref: '#/components/parameters/ScraperSdk'
+        - $ref: '#/components/parameters/AutoParse'
         - $ref: '#/components/parameters/Headers'
         
       responses:
@@ -75,6 +78,9 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/DeviceType'
+        - $ref: '#/components/parameters/ScraperSdk'
+        - $ref: '#/components/parameters/AutoParse'
         - $ref: '#/components/parameters/Headers'
       
       requestBody:
@@ -115,6 +121,9 @@ paths:
         - $ref: '#/components/parameters/SessionNumber'
         - $ref: '#/components/parameters/CountryCode'
         - $ref: '#/components/parameters/Premium'
+        - $ref: '#/components/parameters/DeviceType'
+        - $ref: '#/components/parameters/ScraperSdk'
+        - $ref: '#/components/parameters/AutoParse'
         - $ref: '#/components/parameters/Headers'
       
       requestBody:
@@ -200,14 +209,6 @@ components:
       schema:
         type: string
         
-    Headers:
-      name: headers
-      in: header
-      description: Custom headers.
-      required: false
-      schema:
-        type: string
-        
     Render:
       name: render
       in: query
@@ -230,7 +231,7 @@ components:
       description: To reuse the same proxy for multiple requests, simply use the &session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.
       required: false
       schema:
-        type: integer
+        type: string
         
     CountryCode:
       name: country_code
@@ -247,6 +248,39 @@ components:
       required: false
       schema:
         type: boolean
+        
+    DeviceType:
+      name: device_type
+      in: query
+      description: Undocumented. 
+      required: false
+      schema:
+        type: string
+        enum: [mobile]
+        
+    ScraperSdk:
+      name: scraper_sdk
+      in: query
+      description: Undocumented. 
+      required: false
+      schema:
+        type: string
+        
+    AutoParse:
+      name: autoparse
+      in: query
+      description: Undocumented. 
+      required: false
+      schema:
+        type: boolean
+        
+    Headers:
+      name: headers
+      in: header
+      description: Custom headers. It's using only in C# implementation.
+      required: false
+      schema:
+        type: string
       
   requestBodies:
     FormData:

@@ -57,10 +57,13 @@ namespace ScraperApi
         /// <param name="session_number">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="country_code">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
-        /// <param name="headers">Custom headers.</param>
+        /// <param name="device_type">Undocumented.</param>
+        /// <param name="scraper_sdk">Undocumented.</param>
+        /// <param name="autoparse">Undocumented.</param>
+        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, int? session_number = null, string? country_code = null, bool? premium = null, string? headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -87,6 +90,18 @@ namespace ScraperApi
             if (premium != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("premium") + "=").Append(System.Uri.EscapeDataString(ConvertToString(premium, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (device_type != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("device_type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(device_type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (scraper_sdk != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("scraper_sdk") + "=").Append(System.Uri.EscapeDataString(ConvertToString(scraper_sdk, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (autoparse != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("autoparse") + "=").Append(System.Uri.EscapeDataString(ConvertToString(autoparse, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
 
@@ -184,10 +199,13 @@ namespace ScraperApi
         /// <param name="session_number">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="country_code">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
-        /// <param name="headers">Custom headers.</param>
+        /// <param name="device_type">Undocumented.</param>
+        /// <param name="scraper_sdk">Undocumented.</param>
+        /// <param name="autoparse">Undocumented.</param>
+        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, int? session_number = null, string? country_code = null, bool? premium = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -214,6 +232,18 @@ namespace ScraperApi
             if (premium != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("premium") + "=").Append(System.Uri.EscapeDataString(ConvertToString(premium, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (device_type != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("device_type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(device_type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (scraper_sdk != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("scraper_sdk") + "=").Append(System.Uri.EscapeDataString(ConvertToString(scraper_sdk, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (autoparse != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("autoparse") + "=").Append(System.Uri.EscapeDataString(ConvertToString(autoparse, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
 
@@ -314,10 +344,13 @@ namespace ScraperApi
         /// <param name="session_number">To reuse the same proxy for multiple requests, simply use the &amp;session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.</param>
         /// <param name="country_code">To ensure your requests come from the United States, please use the country_code= flag (e.g. country_code=us). United States (us) geotargeting is available on the Startup plan and higher. Business plan customers also have access to Canada (ca), United Kingdom (uk), Germany (de), France (fr), Spain (es), Brazil (br), Mexico (mx), India (in), Japan (jp), China (cn), and Australia (au). Other countries are available to Enterprise customers upon request.</param>
         /// <param name="premium">Our standard proxy pools include millions of proxies from over a dozen ISPs, and should be sufficient for the vast majority of scraping jobs. However, for a few particularly difficult to scrape sites, we also maintain a private internal pool of residential and mobile IPs. This pool is only available to users on the Business plan or higher. Requests through our premium residential and mobile pool are charged at 10 times the normal rate (every successful request will count as 10 API calls against your monthly limit), each request that uses both rendering javascript and our premium pool will be charged at 25 times the normal rate (every successful request will count as 25 API calls against your monthly limit). To send a request through our premium proxy pool, please use the premium=true flag.</param>
-        /// <param name="headers">Custom headers.</param>
+        /// <param name="device_type">Undocumented.</param>
+        /// <param name="scraper_sdk">Undocumented.</param>
+        /// <param name="autoparse">Undocumented.</param>
+        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, int? session_number = null, string? country_code = null, bool? premium = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -344,6 +377,18 @@ namespace ScraperApi
             if (premium != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("premium") + "=").Append(System.Uri.EscapeDataString(ConvertToString(premium, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (device_type != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("device_type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(device_type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (scraper_sdk != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("scraper_sdk") + "=").Append(System.Uri.EscapeDataString(ConvertToString(scraper_sdk, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (autoparse != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("autoparse") + "=").Append(System.Uri.EscapeDataString(ConvertToString(autoparse, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
 
@@ -632,6 +677,14 @@ namespace ScraperApi
             set { _additionalProperties = value; }
         }
 
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.2.1.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum Device_type
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"mobile")]
+        Mobile = 0,
 
     }
 
