@@ -292,12 +292,25 @@ To simplify implementation, we offer a proxy front-end to the API. The proxy wil
 ```cs
 using ScraperApi;
 
-using var client = ScraperApi.GetProxyHttpClient("YOURAPIKEY");
+using var client = new HttpClient();
 var api = new ScraperApiClient("YOURAPIKEY", client);
 
-var result = await api.GetAsync("http://httpbin.org/ip");
+var result = await api.GetAsync("http://httpbin.org/ip", proxyMode: true);
 
 Console.WriteLine($"Result: {result}");
+```
+
+HttpClient with ScraperApi proxy(Also `ScraperApiClient.GetProxyHttpClientHandler()` and `ScraperApiClient.GetProxy()` methods are available):
+```cs
+using ScraperApi;
+
+using var client = ScraperApiClient.GetProxyHttpClient("YOURAPIKEY");
+
+var response = await client.GetAsync("https://httpbin.org/ip");
+
+Console.WriteLine(response.StatusCode);
+var result = await response.Content.ReadAsStringAsync();
+Console.WriteLine(result);
 ```
 
 ## Account Information

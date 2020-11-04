@@ -13,12 +13,9 @@ namespace ScraperApi.IntegrationTests
         public async Task GetAsyncTest() => await BaseTests.TextTestAsync(
             (api, cancellationToken) => api.GetAsync("http://httpbin.org/ip", cancellationToken: cancellationToken));
 
-        /*
         [TestMethod]
         public async Task ProxyGetAsyncTest() => await BaseTests.TextTestAsync(
-            (api, cancellationToken) => api.GetAsync("http://httpbin.org/ip", cancellationToken: cancellationToken),
-            () => ScraperApiClient.GetProxyHttpClient(Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ?? string.Empty));
-        */
+            (api, cancellationToken) => api.GetAsync("http://httpbin.org/ip", proxyMode: true, cancellationToken: cancellationToken));
 
         [TestMethod]
         public async Task PremiumGetAsyncTest() => await BaseTests.TextTestAsync(
@@ -41,6 +38,22 @@ namespace ScraperApi.IntegrationTests
             });
 
         [TestMethod]
+        public async Task ProxySessionsGetAsyncTest() => await BaseTests.TextTestAsync(
+            async (api, cancellationToken) =>
+            {
+                const long id = long.MaxValue;
+                var response1 = await api.GetAsync("http://httpbin.org/ip", proxyMode: true, sessionNumber: id,
+                    cancellationToken: cancellationToken);
+
+                var response2 = await api.GetAsync("http://httpbin.org/ip", proxyMode: true, sessionNumber: id,
+                    cancellationToken: cancellationToken);
+
+                Assert.AreEqual(response1, response2, "Responses are not equal");
+
+                return response1 + Environment.NewLine + response2;
+            });
+
+        [TestMethod]
         public async Task CustomHeadersGetAsyncTest() => await BaseTests.TextTestAsync(
             async (api, cancellationToken) =>
             {
@@ -49,7 +62,21 @@ namespace ScraperApi.IntegrationTests
                     {"X-MyHeader", "123"},
                 }, cancellationToken: cancellationToken);
 
-                Assert.IsTrue(response.Contains("\"X-Myheader\": \"123\""));
+                Assert.IsTrue(response.Contains("\"X-Myheader\": \"123\""), response);
+
+                return response;
+            });
+
+        [TestMethod]
+        public async Task ProxyCustomHeadersGetAsyncTest() => await BaseTests.TextTestAsync(
+            async (api, cancellationToken) =>
+            {
+                var response = await api.GetAsync("http://httpbin.org/anything", proxyMode: true, headers: new Dictionary<string, string>
+                {
+                    {"X-MyHeader", "123"},
+                }, cancellationToken: cancellationToken);
+
+                Assert.IsTrue(response.Contains("\"X-Myheader\": \"123\""), response);
 
                 return response;
             });

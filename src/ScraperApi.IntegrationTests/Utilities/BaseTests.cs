@@ -9,8 +9,7 @@ namespace ScraperApi.IntegrationTests.Utilities
     internal static class BaseTests
     {
         public static async Task ApiTestAsync(
-            Func<ScraperApiClient, CancellationToken, Task> action, 
-            Func<HttpClient>? clientFactory = null)
+            Func<ScraperApiClient, CancellationToken, Task> action)
         {
             using var source = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             var cancellationToken = source.Token;
@@ -18,7 +17,7 @@ namespace ScraperApi.IntegrationTests.Utilities
             var token = Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
-            using var client = clientFactory?.Invoke() ?? new HttpClient();
+            using var client = new HttpClient();
             var api = new ScraperApiClient(token, client);
 
             try
@@ -38,8 +37,7 @@ namespace ScraperApi.IntegrationTests.Utilities
         }
 
         public static async Task AccountInformationTestAsync(
-            Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action, 
-            Func<HttpClient>? clientFactory = null)
+            Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -48,12 +46,11 @@ namespace ScraperApi.IntegrationTests.Utilities
 
                 Assert.IsNotNull(response, nameof(response));
                 Console.WriteLine(response.GetPropertiesText());
-            }, clientFactory);
+            });
         }
 
         public static async Task TextTestAsync(
-            Func<ScraperApiClient, CancellationToken, Task<string>> action, 
-            Func<HttpClient>? clientFactory = null)
+            Func<ScraperApiClient, CancellationToken, Task<string>> action)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -62,7 +59,7 @@ namespace ScraperApi.IntegrationTests.Utilities
 
                 Assert.IsNotNull(response, nameof(response));
                 Console.WriteLine(response);
-            }, clientFactory);
+            });
         }
     }
 }
