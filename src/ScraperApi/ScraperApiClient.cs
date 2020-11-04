@@ -77,12 +77,9 @@ namespace ScraperApi
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="httpClient"></param>
-        /// <param name="timeout">Overrides HttpClient timeout. Default: 1 minute</param>
-        public ScraperApiClient(string apiKey, HttpClient httpClient, TimeSpan? timeout = null) : this(httpClient)
+        public ScraperApiClient(string apiKey, HttpClient httpClient) : this(httpClient)
         {
             ApiKey = apiKey;
-
-            httpClient.Timeout = timeout ?? TimeSpan.FromMinutes(1);
         }
 
         #endregion
