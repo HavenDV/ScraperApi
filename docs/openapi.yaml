@@ -231,7 +231,8 @@ components:
       description: To reuse the same proxy for multiple requests, simply use the &session_number= flag (e.g. session_number=123). The value of session can be any integer, simply send a new integer to create a new session (this will allow you to continue using the same proxy for each request with that session number). Sessions expire 15 minutes after the last usage.
       required: false
       schema:
-        type: string
+        type: integer
+        format: int64
         
     CountryCode:
       name: country_code
@@ -287,10 +288,14 @@ components:
       description: POST/PUT body.
       required: true
       content:
-        application/x-www-form-urlencoded:
-          schema:
-            type: object
-            additionalProperties: true
+        text/plain:
+              schema:
+                type: string
+        # It should be, but is not supported by generators
+        # application/x-www-form-urlencoded:
+        #   schema:
+        #     type: object
+        #     additionalProperties: true
               
   responses:
     TextResponse:

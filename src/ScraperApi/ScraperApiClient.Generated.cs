@@ -63,7 +63,7 @@ namespace ScraperApi
         /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -205,7 +205,7 @@ namespace ScraperApi
         /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -350,7 +350,7 @@ namespace ScraperApi
         /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, string? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");

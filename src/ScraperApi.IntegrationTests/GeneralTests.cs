@@ -21,7 +21,7 @@ namespace ScraperApi.IntegrationTests
         public async Task SessionsGetAsyncTest() => await BaseTests.TextTestAsync(
             async (api, cancellationToken) =>
             {
-                const string? id = "123";
+                const long id = long.MaxValue;
                 var response1 = await api.GetAsync("http://httpbin.org/ip", sessionNumber: id,
                     cancellationToken: cancellationToken);
 
