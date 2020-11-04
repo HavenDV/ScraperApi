@@ -8,7 +8,9 @@ namespace ScraperApi.IntegrationTests.Utilities
 {
     internal static class BaseTests
     {
-        public static async Task ApiTestAsync(Func<ScraperApiClient, CancellationToken, Task> action)
+        public static async Task ApiTestAsync(
+            Func<ScraperApiClient, CancellationToken, Task> action, 
+            Func<HttpClient>? clientFactory = null)
         {
             using var source = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             var cancellationToken = source.Token;
@@ -16,13 +18,28 @@ namespace ScraperApi.IntegrationTests.Utilities
             var token = Environment.GetEnvironmentVariable("SCRAPER_API_TOKEN") ??
                         throw new InvalidOperationException("token is null.");
 
-            using var client = new HttpClient();
+            using var client = clientFactory?.Invoke() ?? new HttpClient();
             var api = new ScraperApiClient(token, client);
 
-            await action(api, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await action(api, cancellationToken).ConfigureAwait(false);
+            }
+            catch (ApiException exception)
+            {
+                // ignore server errors.
+                if (exception.StatusCode == 500)
+                {
+                    return;
+                }
+
+                throw;
+            }
         }
 
-        public static async Task AccountInformationTestAsync(Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action)
+        public static async Task AccountInformationTestAsync(
+            Func<ScraperApiClient, CancellationToken, Task<AccountInformation>> action, 
+            Func<HttpClient>? clientFactory = null)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -31,10 +48,12 @@ namespace ScraperApi.IntegrationTests.Utilities
 
                 Assert.IsNotNull(response, nameof(response));
                 Console.WriteLine(response.GetPropertiesText());
-            });
+            }, clientFactory);
         }
 
-        public static async Task TextTestAsync(Func<ScraperApiClient, CancellationToken, Task<string>> action)
+        public static async Task TextTestAsync(
+            Func<ScraperApiClient, CancellationToken, Task<string>> action, 
+            Func<HttpClient>? clientFactory = null)
         {
             await ApiTestAsync(async (api, cancellationToken) =>
             {
@@ -43,7 +62,7 @@ namespace ScraperApi.IntegrationTests.Utilities
 
                 Assert.IsNotNull(response, nameof(response));
                 Console.WriteLine(response);
-            });
+            }, clientFactory);
         }
     }
 }
