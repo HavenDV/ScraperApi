@@ -82,9 +82,11 @@ paths:
         - $ref: '#/components/parameters/ScraperSdk'
         - $ref: '#/components/parameters/AutoParse'
         - $ref: '#/components/parameters/Headers'
+        - $ref: '#/components/parameters/Body'
       
-      requestBody:
-        $ref: '#/components/requestBodies/FormData'
+      # Passing a parameter happens through a parameter, because generators do not support this.
+      # requestBody:
+      #   $ref: '#/components/requestBodies/FormData'
         
       responses:
         '200':
@@ -125,9 +127,11 @@ paths:
         - $ref: '#/components/parameters/ScraperSdk'
         - $ref: '#/components/parameters/AutoParse'
         - $ref: '#/components/parameters/Headers'
+        - $ref: '#/components/parameters/Body'
       
-      requestBody:
-        $ref: '#/components/requestBodies/FormData'
+      # Passing a parameter happens through a parameter, because generators do not support this.
+      # requestBody:
+      #   $ref: '#/components/requestBodies/FormData'
         
       responses:
         '200':
@@ -276,9 +280,17 @@ components:
         type: boolean
         
     Headers:
-      name: headers
+      name: scraper_api_headers
       in: header
       description: Custom headers. It's using only in C# implementation.
+      required: false
+      schema:
+        type: string
+        
+    Body:
+      name: scraper_api_post_put_body
+      in: header
+      description: PUT/POST body. It's using only in C# implementation.
       required: false
       schema:
         type: string

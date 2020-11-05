@@ -164,23 +164,28 @@ namespace ScraperApi
                 : "?");
             urlBuilder.Append($"api_key={Uri.EscapeDataString(apiKey)}");
 
-            if (request.Content is StringContent content)
+            if (request.Headers.TryGetValues("scraper_api_post_put_body", out var bodyValues))
             {
-                var json = content.ReadAsStringAsync().GetAwaiter().GetResult();
-                var formData = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(json);
+                var json = bodyValues.FirstOrDefault();
+                if (json != null && !string.IsNullOrWhiteSpace(json))
+                {
+                    var formData = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(json);
 
-                request.Content.Dispose();
-                request.Content = new FormUrlEncodedContent(formData);
+                    request.Headers.Remove("scraper_api_post_put_body");
+
+                    request.Content.Dispose();
+                    request.Content = new FormUrlEncodedContent(formData);
+                }
             }
 
-            if (request.Headers.TryGetValues("headers", out var values))
+            if (request.Headers.TryGetValues("scraper_api_headers", out var headersValues))
             {
-                var json = values.FirstOrDefault();
+                var json = headersValues.FirstOrDefault();
                 if (json != null && !string.IsNullOrWhiteSpace(json))
                 {
                     var headers = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(json);
 
-                    request.Headers.Remove("headers");
+                    request.Headers.Remove("scraper_api_headers");
                     foreach (var pair in headers)
                     {
                         request.Headers.TryAddWithoutValidation(pair.Key, pair.Value);
@@ -269,7 +274,9 @@ namespace ScraperApi
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
             keepHeaders = headers != null ? true : keepHeaders;
 
-            return await PutCoreAsync(url, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken).ConfigureAwait(false);
+            var formDataJson = JsonConvert.SerializeObject(formData.ToList());
+
+            return await PutCoreAsync(url, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formDataJson, cancellationToken).ConfigureAwait(false);
         }
 
 
@@ -303,7 +310,9 @@ namespace ScraperApi
             var headersJson = headers != null ? JsonConvert.SerializeObject(headers.ToList()) : null;
             keepHeaders = headers != null ? true : keepHeaders;
 
-            return await PostCoreAsync(url, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formData.ToList(), cancellationToken).ConfigureAwait(false);
+            var formDataJson = JsonConvert.SerializeObject(formData.ToList());
+
+            return await PostCoreAsync(url, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, Sdk, autoParse, headersJson, formDataJson, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

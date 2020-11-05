@@ -60,10 +60,10 @@ namespace ScraperApi
         /// <param name="device_type">Undocumented.</param>
         /// <param name="scraper_sdk">Undocumented.</param>
         /// <param name="autoparse">Undocumented.</param>
-        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
+        /// <param name="scraper_api_headers">Custom headers. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> GetCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? scraper_api_headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -111,8 +111,8 @@ namespace ScraperApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    if (headers != null)
-                        request_.Headers.TryAddWithoutValidation("headers", ConvertToString(headers, System.Globalization.CultureInfo.InvariantCulture));
+                    if (scraper_api_headers != null)
+                        request_.Headers.TryAddWithoutValidation("scraper_api_headers", ConvertToString(scraper_api_headers, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
@@ -202,10 +202,11 @@ namespace ScraperApi
         /// <param name="device_type">Undocumented.</param>
         /// <param name="scraper_sdk">Undocumented.</param>
         /// <param name="autoparse">Undocumented.</param>
-        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
+        /// <param name="scraper_api_headers">Custom headers. It's using only in C# implementation.</param>
+        /// <param name="scraper_api_post_put_body">PUT/POST body. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PostCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? scraper_api_headers = null, string? scraper_api_post_put_body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -253,11 +254,11 @@ namespace ScraperApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    if (headers != null)
-                        request_.Headers.TryAddWithoutValidation("headers", ConvertToString(headers, System.Globalization.CultureInfo.InvariantCulture));
-                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
+                    if (scraper_api_headers != null)
+                        request_.Headers.TryAddWithoutValidation("scraper_api_headers", ConvertToString(scraper_api_headers, System.Globalization.CultureInfo.InvariantCulture));
+                    if (scraper_api_post_put_body != null)
+                        request_.Headers.TryAddWithoutValidation("scraper_api_post_put_body", ConvertToString(scraper_api_post_put_body, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
@@ -347,10 +348,11 @@ namespace ScraperApi
         /// <param name="device_type">Undocumented.</param>
         /// <param name="scraper_sdk">Undocumented.</param>
         /// <param name="autoparse">Undocumented.</param>
-        /// <param name="headers">Custom headers. It's using only in C# implementation.</param>
+        /// <param name="scraper_api_headers">Custom headers. It's using only in C# implementation.</param>
+        /// <param name="scraper_api_post_put_body">PUT/POST body. It's using only in C# implementation.</param>
         /// <returns>Text response.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? headers = null, object? body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        protected async System.Threading.Tasks.Task<string> PutCoreAsync(string url, bool? render = null, bool? keep_headers = null, long? session_number = null, string? country_code = null, bool? premium = null, Device_type? device_type = null, string? scraper_sdk = null, bool? autoparse = null, string? scraper_api_headers = null, string? scraper_api_post_put_body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (url == null)
                 throw new System.ArgumentNullException("url");
@@ -398,11 +400,11 @@ namespace ScraperApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    if (headers != null)
-                        request_.Headers.TryAddWithoutValidation("headers", ConvertToString(headers, System.Globalization.CultureInfo.InvariantCulture));
-                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
+                    if (scraper_api_headers != null)
+                        request_.Headers.TryAddWithoutValidation("scraper_api_headers", ConvertToString(scraper_api_headers, System.Globalization.CultureInfo.InvariantCulture));
+                    if (scraper_api_post_put_body != null)
+                        request_.Headers.TryAddWithoutValidation("scraper_api_post_put_body", ConvertToString(scraper_api_post_put_body, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
