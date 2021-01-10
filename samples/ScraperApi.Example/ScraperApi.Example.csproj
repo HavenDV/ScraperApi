@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ScraperApi" Version="0.6.0" />
+    <PackageReference Include="ScraperApi" Version="1.0.4" />
   </ItemGroup>
 
 </Project>
