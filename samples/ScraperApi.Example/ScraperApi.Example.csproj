@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net45</TargetFrameworks>
+    <TargetFrameworks>net4.5;net5.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <RootNamespace>Example</RootNamespace>
+    <RootNamespace>Examples</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

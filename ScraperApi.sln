@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi", "src\ScraperApi\ScraperApi.csproj", "{B4A051B9-9560-4178-A38F-631F34778883}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi", "src\libs\ScraperApi\ScraperApi.csproj", "{B4A051B9-9560-4178-A38F-631F34778883}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.IntegrationTests", "src\ScraperApi.IntegrationTests\ScraperApi.IntegrationTests.csproj", "{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.IntegrationTests", "src\tests\ScraperApi.IntegrationTests\ScraperApi.IntegrationTests.csproj", "{16ECC7F6-0E4E-4402-9FDA-12B03C777D14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB8BE7D6-0F1B-4721-970A-3641A998A5E3}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,7 +18,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.Example", "src\ScraperApi.Example\ScraperApi.Example.csproj", "{A17CDECA-DCC2-45AE-B390-012B3843B33B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperApi.Example", "samples\ScraperApi.Example\ScraperApi.Example.csproj", "{A17CDECA-DCC2-45AE-B390-012B3843B33B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{5AACDBB8-5E64-48FC-8419-120251506981}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{15B51D33-8097-471E-A874-CA25ECEF5A22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{CE40F355-71F5-412A-BE63-3AED5B36F570}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4A051B9-9560-4178-A38F-631F34778883} = {5AACDBB8-5E64-48FC-8419-120251506981}
+		{16ECC7F6-0E4E-4402-9FDA-12B03C777D14} = {15B51D33-8097-471E-A874-CA25ECEF5A22}
+		{A17CDECA-DCC2-45AE-B390-012B3843B33B} = {CE40F355-71F5-412A-BE63-3AED5B36F570}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E28154C6-5E30-4D7E-B5DC-976EA85D9752}

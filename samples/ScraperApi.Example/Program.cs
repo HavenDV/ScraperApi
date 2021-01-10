@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ScraperApi;
 
-namespace Example
+namespace Examples
 {
     internal static class Program
     {
