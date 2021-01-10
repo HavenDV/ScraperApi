@@ -345,7 +345,7 @@ Result:
 
 ## Live Example
 
-C# .NET Fiddle - https://dotnetfiddle.net/ 
+C# .NET Fiddle - https://dotnetfiddle.net/  
 VB.NET .NET Fiddle - https://dotnetfiddle.net/ 
 
 ## OpenAPI Specification
