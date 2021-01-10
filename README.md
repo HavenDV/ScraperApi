@@ -348,5 +348,8 @@ Result:
 C# .NET Fiddle - https://dotnetfiddle.net/ 
 VB.NET .NET Fiddle - https://dotnetfiddle.net/ 
 
+## OpenAPI Specification
+It's available here: https://app.swaggerhub.com/apis/HavenDV/ScraperApi/1.0.0
+
 ## Contacts
 * [mail](mailto:havendv@gmail.com)
