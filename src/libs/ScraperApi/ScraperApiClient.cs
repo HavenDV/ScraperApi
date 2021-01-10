@@ -94,11 +94,11 @@ namespace ScraperApi
             Device_type? deviceType = null,
             bool? autoParse = null)
         {
-            return new HttpClientHandler
+            return new()
             {
                 Proxy = GetProxy(apiKey, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, autoParse),
 #if !NET45
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
 #endif
             };
         }
@@ -125,9 +125,11 @@ namespace ScraperApi
             Device_type? deviceType = null,
             bool? autoParse = null)
         {
-            return new HttpClient(
+#pragma warning disable CA2000
+            return new(
                 GetProxyHttpClientHandler(apiKey, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, autoParse), 
                 true);
+#pragma warning restore CA2000
         }
 
         #endregion
@@ -227,7 +229,7 @@ namespace ScraperApi
                 var apiKey = ApiKey ?? throw new InvalidOperationException("ApiKey is null");
 
                 using var client = GetProxyHttpClient(apiKey, render, keepHeaders, sessionNumber, countryCode, premium, deviceType, autoParse);
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
                 foreach (var pair in headers ?? new List<KeyValuePair<string, string>>())
                 {
                     request.Headers.TryAddWithoutValidation(pair.Key, pair.Value);
